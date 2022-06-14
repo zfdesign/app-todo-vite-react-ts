@@ -1,13 +1,17 @@
 {
   "name": "app-todo-vite-react-ts",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
+  "author": {
+    "name": "Zlatin Ivanov"
+  },
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test:e2e": "cypress open",
-    "test:ci": "cypress run",
+    "test:ci": "npm run dev | cypress run",
     "test": "npm run dev | npm run test:e2e"
   },
   "dependencies": {
