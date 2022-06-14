@@ -5,7 +5,7 @@ import { ITodo } from './Interfaces'
 
 const App: FC = () => {
   const [todo, setTodo] = useState<string>("")
-  const [timeCreated, settimeCreated] = useState<number>(0)
+  const [timeCreated, setTimeCreated] = useState<number>(0)
   const [completeState, setCompleteState] = useState<boolean>(false)
   const [todoList, setTodoList] = useState<ITodo[]>([])
 
@@ -21,7 +21,7 @@ const App: FC = () => {
     const newTodo = { completeState: completeState, timeCreated: timeCreated, text: todo }
     setTodoList([...todoList, newTodo])
     setTodo("")
-    settimeCreated(0)
+    setTimeCreated(0)
     setCompleteState(false)
     if (null !== todoTextInput.current) {
       todoTextInput.current.focus();
