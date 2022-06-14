@@ -17,3 +17,11 @@ As mentioned above more could be done on presentation, structuring the project, 
 More complete test coverage e.g. unit, devices, performance, visual regression, accessibility etc.
 Integrate with a service to provide the data persistence. 
 Added functionality such as editing, organising and sorting the TO DO items, adding completion date, notification reminders etc. to make a more complete solution. 
+
+## Note on tests
+
+Running End to End tests: `yarn test` should be just enough. However if for some reason that does not work, please be aware that `yarn dev` may need to be run in a separate Terminal window, along side `yarn test:e2e`. 
+
+Once Cypress window has loaded, select `E2E Testing`, optionally select browser and follow up with `Start E2E testing in ...` button. In the Browser select Specs and `app.cy.js` file on the page. 
+
+When running `yarn test:ci` cypress will run in the Terminal (CommandLine) record the session video that can be found in `./cypress/videos/`.
