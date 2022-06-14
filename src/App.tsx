@@ -1,4 +1,4 @@
-import { useState, FC, ChangeEvent } from 'react'
+import { useState, FC, ChangeEvent, useRef } from 'react'
 import './Interfaces'
 import './App.css'
 import { ITodo } from './Interfaces'
@@ -8,6 +8,8 @@ const App: FC = () => {
   const [timeCreated, settimeCreated] = useState<number>(0)
   const [completeState, setCompleteState] = useState<boolean>(false)
   const [todoList, setTodoList] = useState<ITodo[]>([])
+
+  const todoTextInput = useRef<HTMLInputElement>(null)
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
@@ -21,6 +23,9 @@ const App: FC = () => {
     setTodo("")
     settimeCreated(0)
     setCompleteState(false)
+    if (null !== todoTextInput.current) {
+      todoTextInput.current.focus();
+    }
   }
 
   const handleDeleteTodo = (index: number) => {
@@ -37,10 +42,8 @@ const App: FC = () => {
       }
       return todo
     })
-    console.log(list)
 
     setTodoList(list)
-    console.log('handleCompleteState', index)
   }
 
   return (
@@ -51,7 +54,7 @@ const App: FC = () => {
       <div className="c-todos">
       <div className="new-todo">
         <label htmlFor="todoText">Add new item</label>
-        <input type="text" id="todoText" className="c-forField" /// <reference path="" />
+        <input type="text" id="todoText" className="c-forField" ref={todoTextInput}
          onChange={handleInputChange} value={todo} />
         <button type="button" onClick={handleAddToDo}>Add</button>
       </div>
