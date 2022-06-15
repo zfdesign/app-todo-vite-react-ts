@@ -6,6 +6,8 @@ describe('Given My To Do app', () => {
         cy.visit('/')
     })
 
+
+
     context('When loaded', () => {
        
         it('Then To Do input and empty list exists', () => {
@@ -24,10 +26,7 @@ describe('Given My To Do app', () => {
 
         it('Then I am able to create a To Do item', () => {
             // set
-            cy.get('[data-test-id="todoText"]').as('ToDoInput')
-            cy.get('[data-test-id="addTodo"]').as('ToDoAdd')
-            cy.get('@ToDoInput').type(todoText)
-            cy.get('@ToDoAdd').click()
+            cy.addToDoItem()
             
             // assert
             cy.get('[data-test-id="todoList"]').should('be.visible')
@@ -38,19 +37,27 @@ describe('Given My To Do app', () => {
 
         it('Then I am able to complete a To Do item', () => {
             // set
-            cy.get('[data-test-id="todoText"]').as('ToDoInput')
-            cy.get('[data-test-id="addTodo"]').as('ToDoAdd')
-            cy.get('@ToDoInput').type(todoText)
-            cy.get('@ToDoAdd').click()
-            cy.get('[data-test-id="todoItemCheckbox"]:last').as('ToDoItemCheckbox')
+            cy.addToDoItem()
+            cy.toggleLastToDoItem()
 
+            // assert
+            cy.get('[data-test-id="todoListCompleted"]').within(() => {
+                cy.get('[data-test-id="todoItemCheckbox"]:last').as('ToDoItemCompletedCheckbox')
+                cy.get('@ToDoItemCompletedCheckbox').should('be.checked')
+                cy.get('[data-test-id="todoItemText"]').should('have.class', 'u-line-through')
+            })
+        })
+
+        xit('Then I am able to set item to incomplete', () => {
+            // set
+            cy.get('[data-test-id="todoListCompleted"]').within((completedList) => {
+                cy.toggleLastToDoItem()
+            })
             
             // assert
-            cy.get('@ToDoItemCheckbox').click()
-            cy.get('@ToDoItemCheckbox').should('be.checked')
-            cy.get('[data-test-id="todoItemText"]').should('have.class', 'u-line-through')
+            cy.get('[data-test-id="todoListCompleted"]').should('not.exist')
         })
-        
+
         it('Then I am able to remove a To Do item', () => {
             // set
             cy.get('[data-test-id="todoItem"]:last').within((todo) => {

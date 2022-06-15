@@ -72,7 +72,7 @@ const App: FC = () => {
         <ToDoInput addToDo={handleAddToDo} />
         {todoList.length === 0 && todoListCompleted.length === 0 && <p data-test-id="todoEmptyListMessage">Nothing here yet!</p>}
         <ToDoList listTitle={content.todoList.title} todoList={todoList} listTypeCompleted={false} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
-        <ToDoList listTitle={content.todoListCompleted.title} todoList={todoListCompleted} listTypeCompleted={true} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
+        <ToDoList listTitle={content.todoListCompleted.title} todoList={todoListCompleted} listTypeCompleted={true} onCompletedChange={handleSetIncomplete} onRemoveTodo={handleRemoveTodo} />
       </div>
       <footer>
         <p>

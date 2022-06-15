@@ -13,7 +13,7 @@ const ToDoList: FC<IToDoList> = ({ listTitle, todoList, listTypeCompleted, onCom
     }
 
     return (
-        <div className="c-todoList">
+        <div className="c-todoList" data-test-id={listTypeCompleted ? "todoListCompleted" : "todoList"}>
             {todoList.length > 0 &&
             <div>
             <h2>{listTitle}</h2>
