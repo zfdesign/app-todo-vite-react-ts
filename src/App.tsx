@@ -1,31 +1,55 @@
-import { useState, FC, ChangeEvent, useRef } from 'react'
-import './Interfaces'
+import { useState, FC } from 'react'
+import { ITodo } from './Interfaces'
 import NewToDo from './Components/NewTodo'
 import './App.css'
 
 const App: FC = () => {
   const [todoList, setTodoList] = useState<ITodo[]>([])
+  const [todoListCompleted, setTodoListCompleted] = useState<ITodo[]>([])
 
-  const handleAddToDo = (todo) => {
+  const handleAddToDo = (todo: ITodo) => {
+    // When editing
+    if (todo.completed) {
+      setTodoListCompleted([...todoListCompleted, todo])
+    } else {
+      setTodoList([...todoList, todo])
+    }
+  }
+
+  const handleRemoveTodo = (index: number, completed: boolean) => {
+    if (completed) {
+      const list = todoListCompleted.filter((t, i: number) => {
+        return i !== index
+      })
+      setTodoListCompleted(list)
+    } else {
+      const list = todoList.filter((t, i: number) => {
+        return i !== index
+      })
+      setTodoList(list)
+    }
+  }
+
+  const handleSetCompleted = (index: number) => {
+    const todo = todoList[index]
+    const list = todoList.filter((t, i: number) => i !== index)
+    // Remove from `todoList`
+    setTodoList(list)
+
+    // Add to `todoListCompleted`
+    todo.completed = true
+    setTodoListCompleted([...todoListCompleted, todo])
+  }
+  
+  const handleSetIncomplete = (index: number) => {
+    const todo = todoListCompleted[index]
+    const list = todoListCompleted.filter((t, i: number) => i !== index)
+    // Remove from `todoListCompleted`
+    setTodoListCompleted(list)
+    
+    // Add to `todoList`
+    todo.completed = false
     setTodoList([...todoList, todo])
-  }
-
-  const handleRemoveTodo = (index: number) => {
-    const list = todoList.filter((todo: ITodo, i: number) => {
-      return i !== index
-    })
-    setTodoList(list)
-  }
-
-  const handleCompleteState = (index: number) => {
-    const list = todoList.map((todo: ITodo, i: number) => {
-      if (i === index) {
-        todo.completed = !todo.completed
-      }
-      return todo
-    })
-
-    setTodoList(list)
   }
 
   return (
@@ -34,21 +58,42 @@ const App: FC = () => {
         <h1>My To Do List</h1>
       </header>
       <div className="c-todos">
-        <NewToDo addToDo={handleAddToDo}  />
+        <NewToDo addToDo={handleAddToDo} />
+        {todoList.length === 0 && todoListCompleted.length === 0 && <p data-test-id="todoEmptyListMessage">Nothing here yet!</p>}
+        {/* TODO: ToDoListComponent props: [listTitle, todoList, onCompletedChange, handleRemoveTodo] */}
         <div className="c-todoList">
-          {todoList.length > 0 ?
-            <ul data-test-id="todoList">
-              {todoList.map((t, i) => {
-                return <li key={i} data-test-id="todoItem">
-                  <input type="checkbox" checked={t.completed} onChange={() => handleCompleteState(i)} data-test-id="todoItemCheckbox" />
-                  <span className={t.completed ? "u-line-through" : ""} data-test-id="todoItemText">{t.text}</span>
-                  <button onClick={() => handleRemoveTodo(i)} data-test-id="todoItemRemove">Remove</button>
-                </li>
-              })
-              }
-            </ul>
-            :
-            <p data-test-id="todoEmptyListMessage">Nothing here yet!</p>
+          {todoList.length > 0 &&
+            <div data-test-id="todoList">
+              <h2>Still to do!</h2>
+              <ul data-test-id="todoList">
+                {todoList.map((t, i) => {
+                  return <li key={i} data-test-id="todoItem">
+                    <input type="checkbox" onChange={() => handleSetCompleted(i)} data-test-id="todoItemCheckbox" />
+                    <span data-test-id="todoItemText">{t.text}</span>
+                    <button onClick={(i) => handleRemoveTodo(i, false)} data-test-id="todoItemRemove">Remove</button>
+                  </li>
+                })}
+              </ul>
+            </div>
+          }
+        </div>
+
+        <div className="c-todoList-completed">
+          {todoListCompleted.length > 0 &&
+            <div data-test-id="todoList">
+              <h2>Completed!</h2>
+
+              <ul data-test-id="todoList-completed">
+                {todoListCompleted.map((t, i) => {
+                  return <li key={i} data-test-id="todoItem">
+                    <input type="checkbox" checked onChange={() => handleSetIncomplete(i)} data-test-id="todoItemCheckbox" />
+                    <span className="u-line-through" data-test-id="todoItemText">{t.text}</span>
+                    <button onClick={(i) => handleRemoveTodo(i, true)} data-test-id="todoItemRemove">Remove</button>
+                  </li>
+                })
+                }
+              </ul>
+            </div>
           }
         </div>
       </div>
