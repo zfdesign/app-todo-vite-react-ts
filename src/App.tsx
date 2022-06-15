@@ -1,5 +1,5 @@
-import { useState, FC } from 'react'
-import { ITodo } from './Interfaces'
+import { ChangeEvent, FC, useState } from 'react'
+import { INewToDo, ITodo } from './Interfaces'
 import NewToDo from './Components/NewTodo'
 import ToDoList from './Components/ToDoList'
 import './App.css'
@@ -7,8 +7,12 @@ import './App.css'
 const App: FC = () => {
 
   const content = {
-    todoListTitle: "Still to do!",
-    todoListCompletedTitle: "Completed!"
+    todoList: {
+      title: "Still to do!",
+    },
+    todoListCompleted: {
+      title: "Completed!"
+    }
   }
 
   const [todoList, setTodoList] = useState<ITodo[]>([])
@@ -67,8 +71,8 @@ const App: FC = () => {
       <div className="c-todos">
         <NewToDo addToDo={handleAddToDo} />
         {todoList.length === 0 && todoListCompleted.length === 0 && <p data-test-id="todoEmptyListMessage">Nothing here yet!</p>}
-        <ToDoList listTitle={content.todoListTitle} todoList={todoList} listTypeCompleted={false} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
-        <ToDoList listTitle={content.todoListCompletedTitle} todoList={todoListCompleted} listTypeCompleted={true} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
+        <ToDoList listTitle={content.todoList.title} todoList={todoList} listTypeCompleted={false} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
+        <ToDoList listTitle={content.todoListCompleted.title} todoList={todoListCompleted} listTypeCompleted={true} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
       </div>
       <footer>
         <p>

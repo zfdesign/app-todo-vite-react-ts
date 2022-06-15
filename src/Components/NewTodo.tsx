@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import React, { ChangeEvent, FC, useState, useRef } from 'react'
-import { ITodo } from '../Interfaces'
+import React, { ChangeEvent, FormEvent, FC, useState, useRef } from 'react'
+import { ITodo, INewToDo } from '../Interfaces'
 
-const NewToDo: FC = ({ addToDo }) => {
+const NewToDo: FC<INewToDo> = ({ addToDo }) => {
     
     const todoTextInput = useRef<HTMLInputElement>(null)
 
@@ -10,7 +10,7 @@ const NewToDo: FC = ({ addToDo }) => {
     const [created, setTodoCreated] = useState<null|number>(null)
     const [completed, setTodoCompleted] = useState<boolean>(false)
 
-    const handleAddToDo = (e) => {
+    const handleAddToDo = (e?: FormEvent<HTMLFormElement>) => {
         e && e.preventDefault()
         const timestamp: number = created || new Date().getTime()
         const newTodo: ITodo = {
@@ -48,7 +48,7 @@ const NewToDo: FC = ({ addToDo }) => {
                 onChange={($event) => handleInputChange($event)}
                 value={text}
                 data-test-id="todoText" />
-            <button type="button" onClick={handleAddToDo} data-test-id="addTodo">Add</button>
+            <button type="button" onClick={() => handleAddToDo()} data-test-id="addTodo">Add</button>
         </form>
     )
 }

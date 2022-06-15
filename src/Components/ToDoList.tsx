@@ -1,8 +1,8 @@
 import PropTypes, { object } from "prop-types";
-import React, { ChangeEvent, FC, useState, useRef } from 'react'
-import { ITodo } from '../Interfaces'
+import React, { FC } from 'react'
+import { IToDoList } from '../Interfaces'
 
-const ToDoList: FC = ({ listTitle, todoList, listTypeCompleted, onCompletedChange, onRemoveTodo }) => {
+const ToDoList: FC<IToDoList> = ({ listTitle, todoList, listTypeCompleted, onCompletedChange, onRemoveTodo }) => {
 
     const handleSetCompleted = (i: number) => {
         onCompletedChange(i, listTypeCompleted)
