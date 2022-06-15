@@ -4,7 +4,7 @@ export interface ITodo {
     timeCreated: null|number
 }
 
-export interface INewToDo {
+export interface IToDoInput {
     addToDo: any
 }
 

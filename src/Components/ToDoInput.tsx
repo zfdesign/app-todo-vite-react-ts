@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React, { ChangeEvent, FormEvent, FC, useState, useRef } from 'react'
-import { ITodo, INewToDo } from '../Interfaces'
+import { ITodo, IToDoInput } from '../Interfaces'
 
-const NewToDo: FC<INewToDo> = ({ addToDo }) => {
+const ToDoInput: FC<IToDoInput> = ({ addToDo }) => {
     
     const todoTextInput = useRef<HTMLInputElement>(null)
 
@@ -53,8 +53,8 @@ const NewToDo: FC<INewToDo> = ({ addToDo }) => {
     )
 }
 
-NewToDo.propTypes = {
+ToDoInput.propTypes = {
     addToDo: PropTypes.func.isRequired
 }
 
-export default NewToDo
+export default ToDoInput

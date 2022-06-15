@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react'
-import { INewToDo, ITodo } from './Interfaces'
-import NewToDo from './Components/NewTodo'
+import { IToDoInput, ITodo } from './Interfaces'
+import ToDoInput from './Components/ToDoInput'
 import ToDoList from './Components/ToDoList'
 import './App.css'
 
@@ -69,7 +69,7 @@ const App: FC = () => {
         <h1>My To Do List</h1>
       </header>
       <div className="c-todos">
-        <NewToDo addToDo={handleAddToDo} />
+        <ToDoInput addToDo={handleAddToDo} />
         {todoList.length === 0 && todoListCompleted.length === 0 && <p data-test-id="todoEmptyListMessage">Nothing here yet!</p>}
         <ToDoList listTitle={content.todoList.title} todoList={todoList} listTypeCompleted={false} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
         <ToDoList listTitle={content.todoListCompleted.title} todoList={todoListCompleted} listTypeCompleted={true} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
