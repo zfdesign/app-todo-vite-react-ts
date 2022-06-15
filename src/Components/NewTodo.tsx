@@ -10,7 +10,8 @@ const NewToDo: FC = ({ addToDo }) => {
     const [created, setTodoCreated] = useState<null|number>(null)
     const [completed, setTodoCompleted] = useState<boolean>(false)
 
-    const handleAddToDo = () => {
+    const handleAddToDo = (e) => {
+        e && e.preventDefault()
         const timestamp: number = created || new Date().getTime()
         const newTodo: ITodo = {
             completed: completed,
@@ -37,7 +38,7 @@ const NewToDo: FC = ({ addToDo }) => {
     }
 
     return (
-        <div className="new-todo">
+        <form className="new-todo" onSubmit={handleAddToDo} action="#">
             <label htmlFor="todoText">Add new item</label>
             <input
                 type="text"
@@ -48,7 +49,7 @@ const NewToDo: FC = ({ addToDo }) => {
                 value={text}
                 data-test-id="todoText" />
             <button type="button" onClick={handleAddToDo} data-test-id="addTodo">Add</button>
-        </div>
+        </form>
     )
 }
 
