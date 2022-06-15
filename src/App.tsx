@@ -1,9 +1,16 @@
 import { useState, FC } from 'react'
 import { ITodo } from './Interfaces'
 import NewToDo from './Components/NewTodo'
+import ToDoList from './Components/ToDoList'
 import './App.css'
 
 const App: FC = () => {
+
+  const content = {
+    todoListTitle: "Still to do!",
+    todoListCompletedTitle: "Completed!"
+  }
+
   const [todoList, setTodoList] = useState<ITodo[]>([])
   const [todoListCompleted, setTodoListCompleted] = useState<ITodo[]>([])
 
@@ -60,42 +67,8 @@ const App: FC = () => {
       <div className="c-todos">
         <NewToDo addToDo={handleAddToDo} />
         {todoList.length === 0 && todoListCompleted.length === 0 && <p data-test-id="todoEmptyListMessage">Nothing here yet!</p>}
-        {/* TODO: ToDoListComponent props: [listTitle, todoList, onCompletedChange, handleRemoveTodo] */}
-        <div className="c-todoList">
-          {todoList.length > 0 &&
-            <div data-test-id="todoList">
-              <h2>Still to do!</h2>
-              <ul data-test-id="todoList">
-                {todoList.map((t, i) => {
-                  return <li key={i} data-test-id="todoItem">
-                    <input type="checkbox" onChange={() => handleSetCompleted(i)} data-test-id="todoItemCheckbox" />
-                    <span data-test-id="todoItemText">{t.text}</span>
-                    <button onClick={() => handleRemoveTodo(i, false)} data-test-id="todoItemRemove">Remove</button>
-                  </li>
-                })}
-              </ul>
-            </div>
-          }
-        </div>
-
-        <div className="c-todoList-completed">
-          {todoListCompleted.length > 0 &&
-            <div data-test-id="todoList">
-              <h2>Completed!</h2>
-
-              <ul data-test-id="todoList-completed">
-                {todoListCompleted.map((t, i) => {
-                  return <li key={i} data-test-id="todoItem">
-                    <input type="checkbox" checked onChange={() => handleSetIncomplete(i)} data-test-id="todoItemCheckbox" />
-                    <span className="u-line-through" data-test-id="todoItemText">{t.text}</span>
-                    <button onClick={() => handleRemoveTodo(i, true)} data-test-id="todoItemRemove">Remove</button>
-                  </li>
-                })
-                }
-              </ul>
-            </div>
-          }
-        </div>
+        <ToDoList listTitle={content.todoListTitle} todoList={todoList} listTypeCompleted={false} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
+        <ToDoList listTitle={content.todoListCompletedTitle} todoList={todoListCompleted} listTypeCompleted={true} onCompletedChange={handleSetCompleted} onRemoveTodo={handleRemoveTodo} />
       </div>
       <footer>
         <p>
