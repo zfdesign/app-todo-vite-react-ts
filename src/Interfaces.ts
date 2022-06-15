@@ -1,5 +1,7 @@
+import { ReactPropTypes } from "react"
+
 export interface ITodo {
-    completeState: boolean,
+    completed: boolean,
     text: string,
-    timeCreated: number
+    timeCreated: null|number
 }
