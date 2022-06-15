@@ -70,7 +70,7 @@ const App: FC = () => {
                   return <li key={i} data-test-id="todoItem">
                     <input type="checkbox" onChange={() => handleSetCompleted(i)} data-test-id="todoItemCheckbox" />
                     <span data-test-id="todoItemText">{t.text}</span>
-                    <button onClick={(i) => handleRemoveTodo(i, false)} data-test-id="todoItemRemove">Remove</button>
+                    <button onClick={() => handleRemoveTodo(i, false)} data-test-id="todoItemRemove">Remove</button>
                   </li>
                 })}
               </ul>
@@ -88,7 +88,7 @@ const App: FC = () => {
                   return <li key={i} data-test-id="todoItem">
                     <input type="checkbox" checked onChange={() => handleSetIncomplete(i)} data-test-id="todoItemCheckbox" />
                     <span className="u-line-through" data-test-id="todoItemText">{t.text}</span>
-                    <button onClick={(i) => handleRemoveTodo(i, true)} data-test-id="todoItemRemove">Remove</button>
+                    <button onClick={() => handleRemoveTodo(i, true)} data-test-id="todoItemRemove">Remove</button>
                   </li>
                 })
                 }
